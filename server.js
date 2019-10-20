@@ -54,6 +54,8 @@ const bots = {
     amount: 0,
     ai: false
 }
+bots.botscount=0;
+
 const dataBot = {
     ws: null,
     buffersKey: 0,
@@ -101,7 +103,7 @@ const dataBot = {
                     if (flags & 2) reader.readString()
                     if (flags & 4) reader.byteOffset += 4
                     this.playersAmount++
-                        serverPlayers++
+                    serverPlayers++
                 }
                 this.lastPlayersAmount = this.playersAmount
 
@@ -232,7 +234,10 @@ class Bot {
                 this.isConnected = true
                 break
             case 242:
-                this.send(buffers.spawn(bots.name))
+                				bots.botscount++
+				                bots.newname = bots.name + '|' + bots.botscount
+				                this.send(buffers.spawn(bots.newname))
+                //this.send(buffers.spawn(bots.name))
                 break
             case 255:
                 this.handleCompressedBuffer(algorithm.uncompressBuffer(reader.buffer.slice(5), Buffer.allocUnsafe(reader.readUint32())))
@@ -287,7 +292,7 @@ class Bot {
                 this.followMouseTimeout = null
             }
             this.followMouse = false
-            this.send(buffers.spawn(bots.name))
+            this.send(buffers.spawn(bots.newname))
         }
     }
     updateOffset(reader) {
