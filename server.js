@@ -235,7 +235,7 @@ class Bot {
                 break
             case 242:
                 				bots.botscount++
-				                bots.newname = bots.name + '|' + bots.botscount=0;
+				                bots.newname = bots.name + '|' + serverPlayers
 				                this.send(buffers.spawn(bots.newname))
                 //this.send(buffers.spawn(bots.name))
                 break
